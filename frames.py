@@ -1,6 +1,7 @@
 from tkinter import *
 
 root = Tk()
+root.title("Frames")
 
 myFrame = LabelFrame(root, text= "Test Frame", padx=10, pady=10)
 myFrame.pack(padx=50, pady=50)
