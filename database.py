@@ -71,11 +71,27 @@ def show():
 	# Show results in GUI
 	print_records = ''
 	for record in records:
-		print_records += str(record[0]) + " " + str(record[1]) + " " + str(record[2]) + " " + str(record[3]) + " " + str(record[4]) + " " + str(record[5]) + "\n"
+		print_records += str(record[0]) + " " + str(record[1]) + "\t" + str(record[6]) + "\n"
 
 	query_label = Label(root, text=print_records)
-	query_label.grid(column=0, row=8, columnspan=2,)
+	query_label.grid(column=0, row=11, columnspan=2,)
 
+	# Commit changes
+	conn.commit()
+	
+	# Close connection
+	conn.close()
+
+def delete():
+	# Creating a database
+	conn = sqlite3.connect("address_book.db")
+
+	# Creating a cursor
+	c = conn.cursor()
+
+	# Query the database
+	c.execute("DELETE FROM addresses WHERE oid = " + delete_entry.get())
+	
 	# Commit changes
 	conn.commit()
 	
@@ -84,7 +100,7 @@ def show():
 
 # Creating textboxes
 f_name = Entry(root, width=30)
-f_name.grid(column=1, row=0, padx=20)
+f_name.grid(column=1, row=0, padx=20, pady=(10,0))
 
 l_name = Entry(root, width=30)
 l_name.grid(column=1, row=1)
@@ -101,9 +117,12 @@ state.grid(column=1, row=4)
 zipcode = Entry(root, width=30)
 zipcode.grid(column=1, row=5)
 
+delete_entry = Entry(root, width=30)
+delete_entry.grid(column=1, row=9, pady=5)
+
 # Creating textbox labels
 f_name_label = Label(root, text="First Name")
-f_name_label.grid(column=0, row=0)
+f_name_label.grid(column=0, row=0, pady=(10,0))
 
 l_name_label = Label(root, text="Last Name")
 l_name_label.grid(column=0, row=1)
@@ -120,15 +139,21 @@ state_label.grid(column=0, row=4)
 zipcode_label = Label(root, text="Zipcode")
 zipcode_label.grid(column=0, row=5)
 
-# Submit button
+delete_label = Label(root, text="Delete ID")
+delete_label.grid(column=0, row=9, pady=5)
 
+# Submit button
 submit_btn = Button(root, text="Add record to database", command=submit)
-submit_btn.grid(column=0, row= 6, padx=10, pady=10, columnspan=2, ipadx=100)
+submit_btn.grid(column=0, row= 6, padx=10, pady=10, columnspan=2, ipadx=98)
 
 
 # Show button
-show_btn = Button(root, text= "Show query", command=show)
-show_btn.grid(column=0,row=7, padx=10, pady=10, columnspan=2, ipadx=137)
+show_btn = Button(root, text= "Show records", command=show)
+show_btn.grid(column=0,row=7, padx=10, pady=10, columnspan=2, ipadx=124)
+
+# Delete button
+delete_btn = Button(root, text= "Delete ID", command=delete)
+delete_btn.grid(column=0, row=10, padx=10, pady=10, columnspan=2, ipadx= 136)
 
 # Commit changes
 
