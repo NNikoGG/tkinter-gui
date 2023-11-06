@@ -57,7 +57,6 @@ def submit():
 	state.delete(0, END)
 	zipcode.delete(0, END)
 
-	
 
 def show():
 	# Creating a database
